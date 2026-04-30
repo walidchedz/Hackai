@@ -1,17 +1,22 @@
-from core.security import security_check
-from core.devtools import dev_help
+from core.security import security_scan
+from core.dev import dev_assist
+from core.apps import app_ideas
 
-def process(text):
+def engine(text, user):
 
     t = text.lower()
 
-    if "sql" in t or "xss" in t or "auth" in t:
-        return security_check(t)
+    # 🔐 Security mode
+    if any(x in t for x in ["sql", "xss", "injection", "auth", "password"]):
+        return security_scan(t)
 
-    if "code" in t or "error" in t or "api" in t:
-        return dev_help(t)
+    # 💻 Dev mode
+    if any(x in t for x in ["code", "bug", "error", "api", "backend"]):
+        return dev_assist(t)
 
-    if "app idea" in t:
-        return "📱 Idea: Build a password manager + vulnerability scanner"
+    # 📱 App mode
+    if "app" in t or "project" in t:
+        return app_ideas()
 
-    return f"🧠 Analysis: {text}"
+    # 🧠 fallback intelligence
+    return f"🧠 CyberForge AI:\n{text}"
