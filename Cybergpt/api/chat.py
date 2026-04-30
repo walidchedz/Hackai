@@ -1,5 +1,6 @@
-from core.engine import process
-from api.auth import USERS
+from core.engine import engine
+
+USERS = {}
 
 def handler(request):
 
@@ -7,26 +8,26 @@ def handler(request):
     text = body.get("text","")
     user_id = body.get("user_id","guest")
 
-    # إنشاء مستخدم
+    # 👤 user init
     if user_id not in USERS:
         USERS[user_id] = {"plan":"free","requests":0}
 
     user = USERS[user_id]
 
-    # 🔥 limit للـ free
-    if user["plan"] == "free" and user["requests"] >= 20:
+    # 💰 limit system
+    if user["plan"] == "free" and user["requests"] >= 30:
         return {
             "statusCode": 403,
-            "body": {"response":"Upgrade to Pro 🚀"}
+            "body": {"response":"Upgrade to Pro 🔥"}
         }
 
     user["requests"] += 1
 
-    response = process(text)
+    response = engine(text, user)
 
-    # 💎 تحسين Pro
+    # 💎 pro boost
     if user["plan"] == "pro":
-        response += "\n\n💎 Pro Insight: Advanced analysis enabled"
+        response += "\n\n💎 Pro: Advanced analysis enabled"
 
     return {
         "statusCode": 200,
