@@ -1,12 +1,17 @@
-def security_check(text):
+def security_scan(text):
+
+    issues = []
 
     if "sql" in text:
-        return "🔐 SQL Injection → use prepared statements"
+        issues.append("Use ORM or prepared statements")
 
     if "xss" in text:
-        return "🔐 XSS → sanitize inputs"
+        issues.append("Sanitize input + escape output")
 
     if "auth" in text:
-        return "🔐 Auth → JWT + HTTPS + refresh tokens"
+        issues.append("Use JWT + HTTPS + refresh tokens")
 
-    return "🔐 Security analysis done"
+    if "password" in text:
+        issues.append("Never store plain passwords (use bcrypt)")
+
+    return "🔐 Security Report:\n- " + "\n- ".join(issues)
