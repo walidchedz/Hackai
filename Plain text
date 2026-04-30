@@ -1,0 +1,16 @@
+cybergpt/
+ ├── api/
+ │    ├── chat.py
+ │    ├── auth.py
+ │
+ ├── core/
+ │    ├── engine.py
+ │    ├── security.py
+ │    ├── devtools.py
+ │
+ ├── frontend/
+ │    ├── index.html
+ │    ├── app.js
+ │    ├── style.css
+ │
+ ├── vercel.json
